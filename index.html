@@ -1,0 +1,899 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="google-site-verification" content="HoWofmErOOKMSn8dHeXvBTb5cGoEBEB1rQ7Y3CrUYgY" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>SpeedTestHub — Free Internet Speed Test (Ping, Download & Upload)</title>
+<meta name="description" content="Test your real internet speed in seconds with SpeedTestHub. Measure ping, download and upload speeds from your own connection, and learn what your results mean for streaming, gaming and video calls." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SpeedTestHub" />
+<meta property="og:title" content="SpeedTestHub — Free Internet Speed Test" />
+<meta property="og:description" content="Measure your real ping, download and upload speeds in your browser, and find out what your connection is actually good for." />
+<meta property="og:url" content="https://speedtesthub.github.io/" />
+<link rel="canonical" href="https://speedtesthub.github.io/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "SpeedTestHub",
+      "url": "https://speedtesthub.github.io/"
+    },
+    {
+      "@type": "WebApplication",
+      "name": "SpeedTestHub Internet Speed Test",
+      "url": "https://speedtesthub.github.io/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any (web browser)",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "A free browser-based internet speed test that measures ping, download speed and upload speed using real transfers from the visitor's own connection."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "How does this speed test work?", "acceptedAnswer": { "@type": "Answer", "text": "The test runs entirely in your browser. It times small requests to measure ping, downloads data of increasing sizes to measure download speed, and uploads data to measure upload speed. Every number shown is a real measurement of your own connection." } },
+        { "@type": "Question", "name": "What is a good internet speed?", "acceptedAnswer": { "@type": "Answer", "text": "For most households, 50–100 Mbps download is comfortable. A single person browsing and streaming in HD needs about 25 Mbps, while 4K streaming uses roughly 15–25 Mbps per stream. Online gaming needs little bandwidth but depends heavily on low ping." } },
+        { "@type": "Question", "name": "Why is my speed test result lower than my plan speed?", "acceptedAnswer": { "@type": "Answer", "text": "Plans advertise maximum speeds under ideal conditions. Wi-Fi distance, router age, other devices on the network, peak-hour congestion and background downloads all reduce the speed a single device actually sees." } },
+        { "@type": "Question", "name": "What is ping and why does it matter?", "acceptedAnswer": { "@type": "Answer", "text": "Ping is the time, in milliseconds, for a small signal to travel from your device to a server and back. Lower is better: under 30 ms feels instant, 30–60 ms is fine for gaming, and above 100 ms delays become noticeable in games and calls." } },
+        { "@type": "Question", "name": "Does a speed test use much data?", "acceptedAnswer": { "@type": "Answer", "text": "On a fast connection the test may transfer a few hundred megabytes to measure accurately. On slower connections it uses far less because the test sizes adapt to your speed. If you are on a tight mobile data cap, run the test on Wi-Fi." } },
+        { "@type": "Question", "name": "Should I test over Wi-Fi or Ethernet?", "acceptedAnswer": { "@type": "Answer", "text": "Test the way you normally use the connection, then test again with a wired Ethernet cable if you can. The difference between the two results shows how much speed your Wi-Fi is costing you." } },
+        { "@type": "Question", "name": "Why does my speed change every time I run the test?", "acceptedAnswer": { "@type": "Answer", "text": "Internet speed is not constant. It varies with network congestion, Wi-Fi interference, what other devices are doing, and the route your traffic takes. Small variations of 10–20% between runs are normal." } },
+        { "@type": "Question", "name": "What upload speed do I need for video calls?", "acceptedAnswer": { "@type": "Answer", "text": "A one-to-one HD video call needs roughly 2–4 Mbps upload. Group calls, screen sharing and live streaming need more — 6–10 Mbps upload gives comfortable headroom." } },
+        { "@type": "Question", "name": "Can a VPN change my speed test result?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. A VPN adds encryption work and routes your traffic through an extra server, which usually lowers speed and raises ping. Test with the VPN off to measure your raw connection, then with it on to see the cost." } },
+        { "@type": "Question", "name": "Is this speed test free and private?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The test is free, needs no account or sign-up, and the measurements happen in your browser. SpeedTestHub does not store your results or your IP address." } }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+  :root{
+    --bg:#f4f7f9;
+    --surface:#ffffff;
+    --surface-2:#eaf0f3;
+    --ink:#13222c;
+    --muted:#4d6373;
+    --line:#d7e1e7;
+    --accent:#0b7285;
+    --accent-strong:#085a69;
+    --accent-soft:#e2f2f5;
+    --good:#178a50;
+    --warn:#b97d10;
+    --bad:#c0392b;
+    --seg1:#d64541; --seg2:#e8912d; --seg3:#e7c416; --seg4:#57ab5a; --seg5:#178a50;
+    --shadow:0 10px 30px rgba(19,34,44,.08);
+    --radius:14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0b141a;
+      --surface:#122029;
+      --surface-2:#182a36;
+      --ink:#e9f2f6;
+      --muted:#9db4c1;
+      --line:#243845;
+      --accent:#3ec3da;
+      --accent-strong:#6fd3e6;
+      --accent-soft:#12333d;
+      --good:#4cc38a;
+      --warn:#e0a83c;
+      --bad:#e0655a;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:17px;line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:"Archivo","Public Sans",sans-serif;line-height:1.2;margin:0 0 .5em}
+  h1{font-size:clamp(1.9rem,5vw,2.9rem);font-weight:800;letter-spacing:-.01em}
+  h2{font-size:clamp(1.45rem,3.4vw,2rem);font-weight:700;margin-top:1.6em}
+  h3{font-size:1.15rem;font-weight:700;margin-top:1.4em}
+  p{margin:0 0 1em}
+  a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+  a:hover{color:var(--accent-strong)}
+  button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+  /* Header / nav */
+  header.site{
+    position:sticky;top:0;z-index:50;background:var(--surface);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+  .brand{font-family:"Archivo",sans-serif;font-weight:800;font-size:1.25rem;color:var(--ink);text-decoration:none;margin-right:auto;display:flex;align-items:center;gap:9px}
+  .brand:hover{color:var(--ink)}
+  .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft);flex:none}
+  .nav a.navlink{
+    color:var(--ink);text-decoration:none;font-weight:600;font-size:.98rem;
+    padding:9px 13px;border-radius:9px;min-height:2.25rem;display:inline-flex;align-items:center;
+  }
+  .nav a.navlink:hover{background:var(--surface-2);color:var(--ink)}
+  .nav a.navlink.active{background:var(--accent-soft);color:var(--accent-strong)}
+
+  main{padding:34px 0 10px}
+  .page{display:none}
+  .page.on{display:block}
+
+  /* Hero + tester */
+  .hero{max-width:760px}
+  .hero p.lede{font-size:1.13rem;color:var(--muted)}
+  .tester{
+    background:var(--surface);border:1px solid var(--line);border-radius:20px;
+    box-shadow:var(--shadow);padding:28px 22px 24px;margin:26px 0 10px;text-align:center;
+  }
+  .gauge-box{max-width:430px;margin:0 auto}
+  .gauge-box svg{width:100%;height:auto;display:block}
+  .gauge-readout{margin-top:-2px}
+  .gauge-value{font-family:"IBM Plex Mono",monospace;font-size:clamp(2.6rem,9vw,3.9rem);font-weight:600;line-height:1}
+  .gauge-unit{font-size:1.05rem;color:var(--muted);font-weight:600;letter-spacing:.06em}
+  .gauge-phase{margin-top:6px;font-weight:600;color:var(--accent-strong);min-height:1.5em}
+  .progress{height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden;max-width:430px;margin:16px auto 4px}
+  .progress > div{height:100%;width:0%;background:var(--accent);border-radius:99px;transition:width .25s ease}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--accent);color:#fff;border:0;border-radius:12px;cursor:pointer;
+    font-family:"Archivo",sans-serif;font-weight:700;font-size:1.12rem;
+    padding:14px 38px;min-height:3.2rem;margin-top:14px;
+  }
+  .btn:hover{background:var(--accent-strong)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  @media (prefers-color-scheme: dark){ .btn{color:#06222a} .btn:hover{color:#06222a} }
+  .test-note{color:var(--muted);font-size:.92rem;margin-top:12px}
+
+  .results{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0 6px}
+  .result-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 16px;text-align:center}
+  .result-card .label{font-size:.85rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+  .result-card .num{font-family:"IBM Plex Mono",monospace;font-size:2rem;font-weight:600;margin:4px 0 0}
+  .result-card .unit{color:var(--muted);font-size:.95rem;font-weight:600}
+  .result-card .sub{font-size:.9rem;color:var(--muted);margin-top:2px}
+  @media (max-width:620px){ .results{grid-template-columns:1fr} }
+
+  .verdict{display:none;background:var(--accent-soft);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:18px 0 6px}
+  .verdict.on{display:block}
+  .verdict h3{margin-top:0}
+  .verdict ul{margin:.4em 0 0;padding-left:1.2em}
+  .verdict li{margin:.3em 0}
+  .verdict .tag{font-weight:700}
+  .verdict .ok{color:var(--good)} .verdict .mid{color:var(--warn)} .verdict .no{color:var(--bad)}
+
+  .error-box{display:none;background:var(--surface);border:1px solid var(--bad);border-radius:var(--radius);padding:20px 22px;margin:18px 0;text-align:center}
+  .error-box.on{display:block}
+  .error-box h3{color:var(--bad);margin-top:0}
+
+  /* Content sections */
+  section.block{margin:44px 0}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  @media (max-width:760px){ .two-col{grid-template-columns:1fr} }
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px}
+  .panel h3{margin-top:0}
+  table.data{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:.98rem}
+  table.data th,table.data td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  table.data th{font-family:"Archivo",sans-serif;font-size:.88rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  table.data td:first-child{font-weight:600;white-space:nowrap}
+  .table-scroll{overflow-x:auto}
+  @media (max-width:560px){
+    table.data{font-size:.85rem}
+    table.data th,table.data td{padding:8px 6px}
+    table.data td:first-child{white-space:normal}
+    table.data th{letter-spacing:0;text-transform:none;font-size:.82rem}
+  }
+
+  /* Article cards */
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin-top:20px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column}
+  .card h3{margin:0 0 .45em;font-size:1.18rem}
+  .card h3 a{color:var(--ink);text-decoration:none}
+  .card h3 a:hover{color:var(--accent-strong);text-decoration:underline}
+  .card p{color:var(--muted);font-size:.97rem;flex:1}
+  .card .meta{font-size:.85rem;color:var(--muted);margin-bottom:10px;font-weight:600;letter-spacing:.03em}
+  .card .read{font-weight:700;margin-top:12px;display:inline-block;padding:6px 0;min-height:2.25rem}
+
+  /* Article pages */
+  .article{max-width:780px}
+  .article .meta{color:var(--muted);font-weight:600;font-size:.92rem;margin-bottom:18px}
+  .article h2{font-size:1.5rem}
+  .article ul,.article ol{margin:0 0 1.1em;padding-left:1.35em}
+  .article li{margin:.35em 0}
+  .callout{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;margin:20px 0}
+  .callout p:last-child{margin-bottom:0}
+  .related{background:var(--surface-2);border-radius:var(--radius);padding:18px 22px;margin:30px 0 6px}
+  .related h3{margin-top:0}
+  .related ul{margin:0;padding-left:1.2em}
+  .backlink{display:inline-block;margin-bottom:18px;font-weight:600;padding:6px 0;min-height:2.25rem}
+
+  /* FAQ */
+  details.faq{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);margin:10px 0;padding:4px 20px}
+  details.faq summary{cursor:pointer;font-weight:700;font-family:"Archivo",sans-serif;padding:12px 0;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  details.faq summary::-webkit-details-marker{display:none}
+  details.faq summary::after{content:"+";font-size:1.4rem;color:var(--accent);font-weight:600;flex:none}
+  details.faq[open ] summary::after{content:"–"}
+  details.faq p{color:var(--muted);padding-bottom:14px}
+
+  /* Footer */
+  footer.site{border-top:1px solid var(--line);margin-top:56px;padding:30px 0 40px;background:var(--surface)}
+  .foot-grid{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:space-between}
+  .foot-links{display:flex;flex-wrap:wrap;gap:6px 22px}
+  .foot-links a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px 0;min-height:2.25rem;display:inline-flex;align-items:center}
+  .foot-links a:hover{color:var(--accent-strong);text-decoration:underline}
+  .copy{color:var(--muted);font-size:.93rem;margin-top:16px}
+  .small{font-size:.93rem;color:var(--muted)}
+  .prose{max-width:780px}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *{transition:none !important}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="#/"><span class="dot" aria-hidden="true"></span>SpeedTestHub</a>
+    <a class="navlink" data-nav="home" href="#/">Speed Test</a>
+    <a class="navlink" data-nav="articles" href="#/articles">Articles</a>
+    <a class="navlink" data-nav="about" href="#/about">About</a>
+    <a class="navlink" data-nav="contact" href="#/contact">Contact</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============================ HOME ============================ -->
+  <div class="page" id="page-home">
+    <div class="hero">
+      <h1>Internet Speed Test</h1>
+      <p class="lede">Press the button and SpeedTestHub measures your real connection — ping, download and upload — using live data transfers between your browser and a nearby test server. No sign-up, no app, and no made-up numbers: every result is measured from your own connection, right now.</p>
+    </div>
+
+    <div class="tester" aria-live="polite">
+      <div class="gauge-box">
+        <svg viewBox="0 0 300 175" role="img" aria-label="Speed gauge">
+          <path d="M 30 160 A 120 120 0 0 1 61.5 71.6" fill="none" stroke="var(--seg1)" stroke-width="16" stroke-linecap="round"/>
+          <path d="M 72.4 58.9 A 120 120 0 0 1 116.6 43.2" fill="none" stroke="var(--seg2)" stroke-width="16" stroke-linecap="round"/>
+          <path d="M 129.4 40.9 A 120 120 0 0 1 170.6 40.9" fill="none" stroke="var(--seg3)" stroke-width="16" stroke-linecap="round"/>
+          <path d="M 183.4 43.2 A 120 120 0 0 1 227.6 58.9" fill="none" stroke="var(--seg4)" stroke-width="16" stroke-linecap="round"/>
+          <path d="M 238.5 71.6 A 120 120 0 0 1 270 160" fill="none" stroke="var(--seg5)" stroke-width="16" stroke-linecap="round"/>
+          <g id="needle" style="transform-origin:150px 160px; transform:rotate(-90deg); transition:transform .18s ease-out">
+            <polygon points="146.5,160 153.5,160 150,62" fill="var(--ink)"/>
+          </g>
+          <circle cx="150" cy="160" r="10" fill="var(--ink)"/>
+          <text x="30" y="175" font-size="11" fill="var(--muted)" text-anchor="middle">0</text>
+          <text x="86" y="52" font-size="11" fill="var(--muted)" text-anchor="middle">10</text>
+          <text x="150" y="30" font-size="11" fill="var(--muted)" text-anchor="middle">100</text>
+          <text x="216" y="52" font-size="11" fill="var(--muted)" text-anchor="middle">500</text>
+          <text x="272" y="175" font-size="11" fill="var(--muted)" text-anchor="middle">1000+</text>
+        </svg>
+        <div class="gauge-readout">
+          <div><span class="gauge-value" id="gaugeValue">0</span> <span class="gauge-unit" id="gaugeUnit">Mbps</span></div>
+          <div class="gauge-phase" id="gaugePhase">Ready when you are</div>
+        </div>
+      </div>
+      <div class="progress" aria-hidden="true"><div id="progressBar"></div></div>
+      <button class="btn" id="startBtn" type="button">Start Test</button>
+      <p class="test-note">The test transfers real data to measure your speed accurately. On a fast connection this can use a few hundred MB — if you are on a limited mobile plan, connect to Wi-Fi first.</p>
+    </div>
+
+    <div class="error-box" id="errorBox">
+      <h3>We couldn't reach the test servers</h3>
+      <p>The speed test servers did not respond. This usually means the connection dropped for a moment, a firewall or VPN is blocking the test traffic, or an ad-blocker is interfering. Check your connection and try again.</p>
+      <button class="btn" id="retryBtn" type="button">Retry Test</button>
+    </div>
+
+    <div class="results" id="resultsRow">
+      <div class="result-card">
+        <div class="label">Ping</div>
+        <div class="num"><span id="resPing">–</span></div>
+        <div class="unit">ms</div>
+        <div class="sub">Lower is better</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Download</div>
+        <div class="num"><span id="resDown">–</span></div>
+        <div class="unit">Mbps</div>
+        <div class="sub">Receiving data</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Upload</div>
+        <div class="num"><span id="resUp">–</span></div>
+        <div class="unit">Mbps</div>
+        <div class="sub">Sending data</div>
+      </div>
+    </div>
+
+    <div class="verdict" id="verdictBox">
+      <h3>What your results mean</h3>
+      <p id="verdictSummary" style="margin-bottom:.4em"></p>
+      <ul id="verdictList"></ul>
+    </div>
+
+    <section class="block">
+      <h2>How to read your speed test results</h2>
+      <p>Your test produces three numbers, and each one describes a different part of your connection. <strong>Ping</strong> measures responsiveness — how long a tiny signal takes to travel to a server and back. <strong>Download speed</strong> measures how fast data flows to your device, which is what streaming, browsing and downloading files depend on. <strong>Upload speed</strong> measures how fast data flows from your device, which matters for video calls, cloud backups and sending large files. Our guide to <a href="#/download-vs-upload-speed">download vs upload speed</a> explains why the two numbers are rarely equal, and why your plan almost certainly advertises the bigger one.</p>
+      <p>Wondering whether your numbers are actually any good? That depends entirely on what you do online. A single person streaming HD video needs far less than a household of five with two people on video calls and a teenager gaming. We break the numbers down activity by activity in our guide to <a href="#/what-is-a-good-internet-speed">what a good internet speed</a> is — including the speeds Netflix, YouTube, Zoom and major games really use, which are often lower than people expect.</p>
+      <p>Gamers should pay special attention to the first number. Raw bandwidth barely matters for online play; what decides whether a game feels sharp or laggy is <a href="#/what-is-ping-latency">ping and latency</a>, plus its less famous cousins, jitter and packet loss. If your ping is high even though your download speed looks fine, that article explains why — and what actually fixes it.</p>
+    </section>
+
+    <section class="block">
+      <h2>Why your result might look disappointing</h2>
+      <div class="two-col">
+        <div class="panel">
+          <h3>Your plan speed is a maximum, not a promise</h3>
+          <p>Internet plans are sold as "up to" speeds measured under ideal conditions on a wired connection. Real life includes Wi-Fi walls, neighbours on the same channel, older routers and peak-hour congestion. If your result is far below what you pay for even on a wired test, our checklist of <a href="#/why-is-my-internet-slow">12 fixes for slow internet</a> walks through every likely cause, from router placement to the one background app quietly eating your bandwidth.</p>
+        </div>
+        <div class="panel">
+          <h3>Wi-Fi is usually the bottleneck</h3>
+          <p>Most homes never see their full plan speed over Wi-Fi, especially a room or two away from the router. A cable removes interference, distance and contention from the equation entirely. Our comparison of <a href="#/wifi-vs-ethernet">Wi-Fi vs Ethernet</a> shows the real-world speed and latency differences, and helps you decide which devices are worth wiring up.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Quick reference: speed by activity</h2>
+      <p>Everyday browsing, email and social media need only about <strong>3–5 Mbps</strong>, and even a ping under 100 ms feels fine for them. HD video streaming uses <strong>5–8 Mbps per stream</strong>, while a 4K stream needs <strong>15–25 Mbps</strong> — the biggest single demand in most homes. An HD video call uses roughly <strong>3–4 Mbps in each direction</strong> and feels best with ping under 80 ms. Online gaming itself uses just <strong>3–6 Mbps</strong>, but it is the most ping-sensitive activity of all: under 50 ms is where it feels sharp. Broadcasting your own live stream is the hungriest job here, needing <strong>10–25 Mbps of upload</strong>. And large downloads simply go faster the more download speed you have — there is no "enough," only how long you are willing to wait.</p>
+      <p class="small">These are per-activity figures. Add up everything your household does at the same time, then compare the total with the <a href="#/what-is-a-good-internet-speed">good internet speed</a> your home actually needs.</p>
+    </section>
+
+    <section class="block">
+      <h2>Guides &amp; articles</h2>
+      <p>Understand your connection properly with our plain-English guides — what the numbers mean, why they change, and how to make them better.</p>
+      <div class="cards" id="homeCards"></div>
+      <p style="margin-top:18px"><a href="#/articles"><strong>Browse all articles →</strong></a></p>
+    </section>
+
+    <section class="block">
+      <h2>Frequently asked questions</h2>
+      <div id="faqList"></div>
+    </section>
+  </div>
+
+  <!-- ============================ ARTICLES INDEX ============================ -->
+  <div class="page" id="page-articles">
+    <h1>Articles</h1>
+    <p class="lede" style="color:var(--muted);max-width:720px">Original, plain-English guides from SpeedTestHub: what internet speeds mean, why yours might be slow, and how to get the connection you are paying for.</p>
+    <div class="cards" id="articlesCards"></div>
+  </div>
+
+  <!-- Article pages and static pages are injected by script below. -->
+  <div id="dynamicPages"></div>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <a class="brand" href="#/" style="margin-right:0"><span class="dot" aria-hidden="true"></span>SpeedTestHub</a>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="#/articles">Articles</a>
+        <a href="#/about">About</a>
+        <a href="#/contact">Contact</a>
+        <a href="#/privacy">Privacy Policy</a>
+        <a href="#/terms">Terms</a>
+        <a href="#/disclaimer">Disclaimer</a>
+      </nav>
+    </div>
+    <p class="copy">© 2026 SpeedTestHub. Speed test results are measured live in your browser from your own connection.</p>
+  </div>
+</footer>
+
+<script>
+/* ================= Article data ================= */
+var ARTICLES = [
+  {
+    slug: "what-is-a-good-internet-speed",
+    title: "What Is a Good Internet Speed? Mbps Explained by Activity",
+    desc: "How many Mbps do you actually need for streaming, gaming, video calls and working from home? A clear breakdown by activity and household size.",
+    read: "7 min read",
+    body: `
+      <p>Ask ten people what a good internet speed is and you will get ten different answers — because the honest answer is "it depends on what you do." A connection that feels blazing fast to someone who reads news and watches one HD stream can feel unbearable to a house full of gamers, streamers and remote workers. This guide replaces the guesswork with real numbers: what each activity actually uses, how to add up your household's needs, and how to tell whether you are overpaying or under-connected.</p>
+      <h2>What Mbps actually means</h2>
+      <p>Internet speed is measured in megabits per second (Mbps) — how many millions of bits of data move between your home and the internet each second. One important trap: file sizes are measured in mega<em>bytes</em> (MB), and there are 8 bits in a byte. So a 100 Mbps connection downloads at most about 12.5 MB per second, which is why a 1 GB game update takes a little over a minute on that connection, not ten seconds. If the difference between sending and receiving speed confuses you, our guide to <a href="#/download-vs-upload-speed">download vs upload speed</a> explains it in detail.</p>
+      <h2>Speeds by activity</h2>
+      <p>Here is what common activities genuinely consume. These are working figures based on what the services themselves require, not marketing numbers:</p>
+      <ul>
+        <li><strong>Web browsing, email, social media:</strong> 1–5 Mbps. Pages are small; even 3 Mbps feels fine.</li>
+        <li><strong>Music streaming:</strong> under 1 Mbps. Negligible on any modern plan.</li>
+        <li><strong>HD video (1080p):</strong> 5–8 Mbps per stream.</li>
+        <li><strong>4K video:</strong> 15–25 Mbps per stream. This is the single biggest bandwidth eater in most homes.</li>
+        <li><strong>Video calls:</strong> 2–4 Mbps each way for one-to-one HD; group calls with screen sharing can use 5–8 Mbps.</li>
+        <li><strong>Online gaming:</strong> only 3–6 Mbps while playing — but see the ping warning below.</li>
+        <li><strong>Game downloads and updates:</strong> unlimited appetite. A 100 GB game takes about 2.2 hours at 100 Mbps, 22 minutes at 1 Gbps.</li>
+        <li><strong>Working from home:</strong> 10–25 Mbps comfortably covers calls, cloud documents and email.</li>
+        <li><strong>Live streaming your own video:</strong> 10–25 Mbps of <em>upload</em>, sustained — the hardest job on this list.</li>
+      </ul>
+      <h2>The gaming exception: speed is not the point</h2>
+      <p>Online games send surprisingly little data while you play. What decides whether a game feels responsive is latency — the delay between your input and the server's response. A 25 Mbps connection with 20 ms ping will feel dramatically better than a 500 Mbps connection with 150 ms ping. If gaming is your priority, read our explainer on <a href="#/what-is-ping-latency">ping and latency for gamers</a> before spending money on a faster plan; you may need a better router setup, not more bandwidth.</p>
+      <h2>Adding it up for your household</h2>
+      <p>Count what happens <em>at the same time</em> on your busiest evening. Two 4K streams (40 Mbps), one video call (5 Mbps), one person gaming (5 Mbps) and phones doing background updates (10 Mbps) add up to roughly 60 Mbps — so a 100 Mbps plan covers that household with room to spare. A single person in a flat rarely needs more than 50 Mbps. A family of five with several 4K TVs, a home office and a console that downloads huge updates will be genuinely happier on 300–500 Mbps.</p>
+      <h2>So what is "good"?</h2>
+      <p>As a rule of thumb: <strong>25 Mbps</strong> is a workable minimum for one person, <strong>100 Mbps</strong> is a comfortable all-rounder for most households, <strong>300 Mbps+</strong> suits busy homes and heavy downloaders, and <strong>gigabit</strong> is mostly about downloading huge files quickly and future-proofing. Run the test at the top of this page during your busiest hour — that result, not the number on your bill, is the speed you actually live with. And if the result is far below your plan even on a wired connection, work through our list of <a href="#/why-is-my-internet-slow">fixes for slow internet</a> before paying for an upgrade.</p>
+    `
+  },
+  {
+    slug: "download-vs-upload-speed",
+    title: "Download vs Upload Speed: What Is the Difference?",
+    desc: "Why your download speed is ten times your upload speed, what each one is used for, and when upload speed suddenly becomes the number that matters.",
+    read: "6 min read",
+    body: `
+      <p>Every speed test reports two headline numbers: download and upload. Most people glance at the first, ignore the second, and move on — until the day a video call freezes with their face mid-sentence, or a backup takes all weekend, and the "slow internet" turns out to be an upload problem. This guide explains what each direction of traffic does, why they are almost never equal, and how to know which one is holding you back.</p>
+      <h2>The simple definitions</h2>
+      <p><strong>Download speed</strong> is how fast data travels from the internet to your device: loading web pages, streaming films, receiving emails, downloading apps and game updates. <strong>Upload speed</strong> is how fast data travels from your device to the internet: sending emails with attachments, posting photos and videos, backing up files to cloud storage, and — most noticeably — your camera and microphone feed on a video call. Think of download as listening and upload as speaking: both are half of every conversation your devices have.</p>
+      <h2>Why download is (almost) always bigger</h2>
+      <p>Most home internet technologies were designed around how people actually used the early web: consuming far more than they created. Cable and DSL networks therefore divide their capacity unevenly, giving much more room to the download direction — often a 10:1 ratio, so a 300 Mbps plan may come with just 30 Mbps upload. Fibre-to-the-home is the exception: many fibre plans are symmetrical, with identical speeds both ways, because the technology makes it easy. When you run our test and see a big gap between the two numbers, that is usually your plan working exactly as designed, not a fault. Whether either number is enough depends on your household — our guide to <a href="#/what-is-a-good-internet-speed">good internet speed by activity</a> has the full breakdown.</p>
+      <h2>When upload speed matters more than you think</h2>
+      <ul>
+        <li><strong>Video calls:</strong> your outgoing picture and voice are pure upload. A call needs roughly 2–4 Mbps up for HD; if your upload is below that, <em>you</em> are the one who freezes and pixelates, even if everyone else looks fine to you.</li>
+        <li><strong>Working from home:</strong> sharing your screen, sending large files and syncing cloud drives all push data out.</li>
+        <li><strong>Content creation and live streaming:</strong> broadcasting in 1080p needs a sustained 10–15 Mbps upload, with headroom to spare.</li>
+        <li><strong>Cloud backups and photo libraries:</strong> the first big backup of a phone or laptop can be hundreds of gigabytes — at 10 Mbps upload, 100 GB takes about a full day.</li>
+        <li><strong>Online gaming:</strong> modest upload needs, but gaming depends far more on <a href="#/what-is-ping-latency">low ping and latency</a> than on either speed.</li>
+      </ul>
+      <h2>How the test measures each direction</h2>
+      <p>A proper speed test measures download by pulling data of increasing sizes from a test server and timing how long it takes, and upload by sending data to the server and timing that. That is exactly what the test on our home page does, in your browser, against real servers — which is why the numbers reflect your actual connection rather than an estimate. One caution: a slow device, an old router or a weak Wi-Fi signal can cap both numbers below what your line can do. Testing with a cable instead of wireless removes that variable — see our comparison of <a href="#/wifi-vs-ethernet">Wi-Fi vs Ethernet</a> for how large the difference can be.</p>
+      <h2>Which one should you upgrade?</h2>
+      <p>If streams buffer and downloads crawl, you need download headroom. If calls freeze, backups crawl and uploads fail, you need upload — and on cable or DSL plans that may mean switching technology (to fibre, if available) rather than just paying for a bigger tier of the same plan, because the upload ratio usually stays stingy at every tier. And if everything feels sluggish despite healthy numbers on both, the problem is probably neither: work through our checklist of <a href="#/why-is-my-internet-slow">12 fixes for slow internet</a> before spending anything.</p>
+    `
+  },
+  {
+    slug: "what-is-ping-latency",
+    title: "What Is Ping? Latency Explained for Gamers",
+    desc: "Ping, latency, jitter and packet loss — what they mean, what the numbers should be, and the fixes that actually lower your ping in games and calls.",
+    read: "7 min read",
+    body: `
+      <p>You can have a 500 Mbps connection and still lose gunfights to lag. That is because for gaming — and for video calls, remote desktops and anything else that happens in real time — the speed that matters most is not bandwidth at all. It is latency. This guide explains ping and latency in plain terms, gives you the numbers to aim for, and covers the fixes that genuinely move the needle.</p>
+      <h2>Ping and latency: the same idea, twice</h2>
+      <p><strong>Latency</strong> is the time data takes to travel from your device to a server and back again, measured in milliseconds (ms). <strong>Ping</strong> is the tool that measures it: a tiny packet is sent out, and the clock stops when the reply returns. When gamers say "my ping is 20," they mean their round trip to the game server takes 20 ms. Nothing can beat the speed of light, so distance sets a hard floor: a server on another continent will always mean 100 ms or more, no matter how expensive your connection is.</p>
+      <h2>What the numbers mean</h2>
+      <ul>
+        <li><strong>Under 20 ms:</strong> excellent. Feels instant; typical on fibre to a nearby server.</li>
+        <li><strong>20–50 ms:</strong> great for any game, including fast competitive titles.</li>
+        <li><strong>50–100 ms:</strong> playable for most games; slight disadvantage in twitch shooters; fine for calls.</li>
+        <li><strong>100–150 ms:</strong> noticeable delay. Shots register late; conversations start talking over each other.</li>
+        <li><strong>Over 150 ms:</strong> frustrating for real-time anything. Investigate.</li>
+      </ul>
+      <p>Notice what is missing from that list: Mbps. A game in progress uses only a few Mbps — the <a href="#/download-vs-upload-speed">download vs upload speed</a> of your plan is nearly irrelevant to in-game lag, which is why a modest plan with low latency beats a gigabit plan with high latency every time. Bandwidth matters for downloading the game, not playing it.</p>
+      <h2>Jitter and packet loss: ping's evil twins</h2>
+      <p>Two related gremlins cause lag even when average ping looks fine. <strong>Jitter</strong> is variation: if your ping bounces between 15 ms and 120 ms, the game cannot smooth it out, and movement stutters. <strong>Packet loss</strong> is worse — some data never arrives at all, so the game guesses where things are, then snaps them back when the truth catches up (the classic "rubber-banding"). Both are usually caused by congested Wi-Fi, an overloaded connection, or a failing line — not by a slow plan.</p>
+      <h2>What actually lowers ping</h2>
+      <ol>
+        <li><strong>Use a cable.</strong> Wi-Fi adds latency and, worse, jitter. Wiring your PC or console is the single biggest improvement most players can make — our <a href="#/wifi-vs-ethernet">Wi-Fi vs Ethernet</a> comparison shows why.</li>
+        <li><strong>Play on nearby servers.</strong> Region selection in game settings matters more than any hardware. Always pick the closest server region.</li>
+        <li><strong>Stop the bandwidth hogs.</strong> When someone starts a huge download or 4K stream mid-game, your router's queue fills up and ping spikes — a problem called bufferbloat. Pause big transfers while you play, or enable SQM/QoS on your router if it offers it.</li>
+        <li><strong>Restart and update the router.</strong> Routers are small computers; months of uptime and old firmware cost performance.</li>
+        <li><strong>Check for a line problem.</strong> If wired ping to nearby servers is consistently high at all hours, the fault may be your line or provider — the troubleshooting steps in our guide to <a href="#/why-is-my-internet-slow">fixing slow internet</a> will help you prove it before you call them.</li>
+      </ol>
+      <h2>The bottom line</h2>
+      <p>Bandwidth is how <em>much</em> data your connection can carry; latency is how <em>fast</em> each piece starts moving. Streaming cares about the first, gaming cares about the second, and a good connection needs both. Run the test on our home page: if your download number is healthy but your ping is over 100 ms, do not buy a faster plan — fix the latency. Our breakdown of <a href="#/what-is-a-good-internet-speed">what a good internet speed is</a> puts both numbers in context for every activity.</p>
+    `
+  },
+  {
+    slug: "why-is-my-internet-slow",
+    title: "Why Is My Internet So Slow? 12 Fixes That Work",
+    desc: "Internet slower than you pay for? Work through these 12 checks — from router placement to the background app eating your bandwidth — before calling your provider.",
+    read: "8 min read",
+    body: `
+      <p>Slow internet is rarely caused by one dramatic failure. It is usually one small, fixable thing — a router stuffed behind the TV, a cloud backup quietly uploading at full tilt, a plan that was fine three years and four smart TVs ago. Before you spend an hour on hold with your provider, work through these twelve checks in order. Each one is free, and together they cover the overwhelming majority of "my internet is slow" cases we see.</p>
+      <h2>First, measure properly</h2>
+      <p>Run the speed test on our home page twice: once the way you normally connect, and once with a laptop plugged directly into the router with a cable, with everything else in the house idle. If the wired result matches your plan but the wireless one does not, your line is fine and the problem is inside your home — most likely Wi-Fi. If even the wired result is far below your plan, skip ahead to fixes 9–12. Knowing which half of the system is guilty turns a vague complaint into a solvable problem, and gives you evidence if you do need to call your provider. (Our guide to <a href="#/what-is-a-good-internet-speed">good internet speed</a> will also tell you whether your plan itself is simply too small for your household now.)</p>
+      <h2>The 12 fixes</h2>
+      <ol>
+        <li><strong>Restart the router and modem.</strong> The cliché exists because it works. Routers accumulate software glitches and memory leaks over weeks of uptime. Power both off for 30 seconds, then let them boot fully. Do this first; it fixes a surprising share of problems outright.</li>
+        <li><strong>Move the router.</strong> Wi-Fi hates walls, metal, water and distance. A router in a central, elevated, open spot — not on the floor behind furniture, not next to the fish tank or microwave — can double real-world speeds in far rooms.</li>
+        <li><strong>Switch Wi-Fi bands.</strong> The 5 GHz band is much faster but shorter-range; 2.4 GHz travels further but is slower and more crowded. Near the router, use 5 GHz. Far away, 2.4 GHz may actually win. Try both and test.</li>
+        <li><strong>Change the Wi-Fi channel.</strong> If you live among many networks, yours may be shouting over the neighbours'. Router apps and settings let you pick a less congested channel; even the "auto" setting improves after a reboot, when the router re-scans.</li>
+        <li><strong>Hunt the bandwidth hog.</strong> One device can saturate a connection: a cloud backup, a game downloading a 100 GB update, a security camera uploading, a stuck sync. Check your router's connected-devices or traffic page, and pause anything greedy while you test. Remember that calls and backups depend on the <a href="#/download-vs-upload-speed">upload side of your connection</a>, which is the easiest to saturate.</li>
+        <li><strong>Wire the important devices.</strong> Anything that sits still — desktop PC, console, TV, work laptop on a desk — deserves a cable. It removes those devices from Wi-Fi contention entirely and gives them the lowest possible latency. Our <a href="#/wifi-vs-ethernet">Wi-Fi vs Ethernet</a> comparison explains the gains.</li>
+        <li><strong>Update router firmware — or replace the router.</strong> Firmware updates fix real performance bugs. And if your router is a free provider unit from five-plus years ago, a modern Wi-Fi 6 router is often the single best upgrade a home can buy.</li>
+        <li><strong>Check your cables and splitters.</strong> A damaged Ethernet cable can silently drop a connection from gigabit to 100 Mbps. Old coax splitters and loose connectors degrade DSL and cable lines. Swap in a known-good cable and test again.</li>
+        <li><strong>Test at different times of day.</strong> If speeds collapse every evening and recover at midnight, that is congestion — either your neighbourhood sharing capacity or your household's own peak. Congestion patterns are valuable evidence for your provider.</li>
+        <li><strong>Scan for malware.</strong> An infected device can spend its days sending spam or mining cryptocurrency on your bandwidth. Run a reputable scan on any machine that is always warm, always busy, or always uploading.</li>
+        <li><strong>Review your plan honestly.</strong> Households accumulate devices and habits. If your wired test matches your plan but evenings still crawl, the plan itself may no longer fit — compare your measured needs against the per-activity figures in our <a href="#/what-is-a-good-internet-speed">good internet speed guide</a>.</li>
+        <li><strong>Call your provider — with data.</strong> If wired tests are consistently far below your plan at multiple times of day, that is a line or provisioning fault, and only your provider can fix it. Bring dates, times and your wired results; "it feels slow" gets a script reading, while numbers get an engineer.</li>
+      </ol>
+      <h2>What if it is fast but still feels laggy?</h2>
+      <p>Sometimes the speed test is healthy and everything still feels wrong — games stutter, calls echo with delay, pages start loading late. That is usually latency, not bandwidth. High <a href="#/what-is-ping-latency">ping and latency</a>, jitter or packet loss can ruin real-time activities on a connection with plenty of Mbps. The ping figure from your test is the clue: under 50 ms is healthy; consistently over 100 ms on a wired test points to a line problem worth raising with your provider.</p>
+      <h2>The 10-minute version</h2>
+      <p>Restart the router. Test wired. Test wireless. Move the router or wire the big devices. Pause the bandwidth hogs. Those five steps resolve most slow-internet complaints — and when they do not, they produce exactly the evidence you need to get your provider to act.</p>
+    `
+  },
+  {
+    slug: "wifi-vs-ethernet",
+    title: "Wi-Fi vs Ethernet: Which Is Faster and Why",
+    desc: "A cable beats Wi-Fi on speed, latency and stability — but by how much, and does it matter for your devices? An honest comparison with real numbers.",
+    read: "6 min read",
+    body: `
+      <p>Every router has a row of Ethernet ports on the back that most households never touch. That is a shame, because plugging in a cable remains the cheapest, most reliable performance upgrade in home networking. This guide compares Wi-Fi and Ethernet honestly — where the cable wins by a mile, where modern Wi-Fi is genuinely good enough, and which of your devices deserve a wire.</p>
+      <h2>Why Ethernet is faster and steadier</h2>
+      <p>An Ethernet cable is a private road between your device and the router. Nothing else uses it, nothing interferes with it, and its speed does not depend on walls, distance or the neighbours. A standard gigabit port delivers close to 940 Mbps in both directions, all day, every day, with latency under 1 ms on your local network. Wi-Fi, by contrast, is a shared conversation in a crowded room: every device takes turns talking, signals weaken with distance and obstacles, and your neighbours' networks compete for the same airspace. The result is not just lower average speed but <em>inconsistent</em> speed — and inconsistency is what makes calls break up and games stutter.</p>
+      <h2>Real-world numbers</h2>
+      <p>On a typical modern setup with a 500 Mbps fibre plan, you might measure something like this:</p>
+      <ul>
+        <li><strong>Ethernet cable:</strong> ~480–500 Mbps down and up, ping 5–10 ms.</li>
+        <li><strong>Wi-Fi 6, same room as the router:</strong> 400–480 Mbps, ping 8–15 ms. Genuinely close.</li>
+        <li><strong>Wi-Fi, two rooms away:</strong> 60–200 Mbps, ping 15–40 ms, varying minute to minute.</li>
+        <li><strong>Wi-Fi, far corner of the house:</strong> 10–50 Mbps with occasional dropouts — the dead zone everyone recognises.</li>
+      </ul>
+      <p>Your own numbers will differ, which is the point of testing: run our speed test wireless, then wired, and compare. The gap between the two results is exactly what your Wi-Fi is costing you — and it tells you whether to invest in cables, a better router position, or a mesh system.</p>
+      <h2>Latency: the hidden gap</h2>
+      <p>Even when Wi-Fi matches Ethernet on raw Mbps, it adds delay and, worse, variable delay (jitter) as it waits for clear airtime and retransmits lost packets. For streaming video this is invisible — the player buffers ahead. For anything real-time it is the whole story. Gamers chasing low <a href="#/what-is-ping-latency">ping and latency</a> should treat a cable as essential equipment, and anyone whose video calls freeze despite a "fast" plan should test wired before blaming the provider. Note also that a saturated connection hurts the <a href="#/download-vs-upload-speed">upload direction</a> first, which is why you freeze on calls while still hearing everyone else clearly.</p>
+      <h2>Which devices should you wire?</h2>
+      <ul>
+        <li><strong>Always wire if you can:</strong> desktop PCs, game consoles, smart TVs and streaming boxes, work-from-home docks, NAS drives and home servers. They do not move, they use the most data, and they benefit the most.</li>
+        <li><strong>Wi-Fi is fine:</strong> phones, tablets, laptops that roam, smart speakers, bulbs and other small smart-home gadgets. Their needs are tiny.</li>
+        <li><strong>The awkward middle:</strong> a laptop at a fixed desk. A USB-C dock or a single cable run solves it permanently.</li>
+      </ul>
+      <h2>When Wi-Fi is the right answer anyway</h2>
+      <p>Cables are not always practical — rentals, concrete walls, devices in every room. Modern Wi-Fi 6 and 6E routers, placed centrally, serve most households well, and a good mesh system fixes dead zones far better than a cheap extender. If your wireless results are close to your plan speed in the rooms that matter, you have nothing to fix. If they are not, work through our full list of <a href="#/why-is-my-internet-slow">fixes for slow internet</a> — router placement and band selection alone often close most of the gap. And if you are shopping for a plan rather than fixing one, our guide to <a href="#/what-is-a-good-internet-speed">what a good internet speed is</a> will stop you paying for bandwidth your Wi-Fi could never deliver anyway.</p>
+      <h2>The verdict</h2>
+      <p>Ethernet is faster, steadier and lower-latency in every scenario — that part is not close. But "faster" only matters where you can feel it: real-time gaming, calls, big transfers and fixed heavy-use devices. Wire what sits still, let the rest roam on Wi-Fi, and let your own before-and-after speed tests prove the difference.</p>
+    `
+  }
+];
+
+var FAQS = [
+  { q: "How does this speed test work?", a: "The test runs entirely in your browser. It times small requests to measure ping, downloads data of increasing sizes from test servers to measure download speed, and uploads data to measure upload speed. Every number shown is a real measurement of your own connection at that moment — nothing is estimated or preset." },
+  { q: "What is a good internet speed?", a: "For most households, 50–100 Mbps download is comfortable. A single person browsing and streaming in HD needs about 25 Mbps, while 4K streaming uses roughly 15–25 Mbps per stream. Online gaming needs little bandwidth but depends heavily on low ping. Our article on what a good internet speed is breaks it down activity by activity." },
+  { q: "Why is my speed test result lower than my plan speed?", a: "Plans advertise maximum speeds under ideal conditions, usually on a wired connection. Wi-Fi distance, router age, other devices on the network, peak-hour congestion and background downloads all reduce the speed a single device actually sees. Try a wired test close to the router to see what your line itself can do." },
+  { q: "What is ping and why does it matter?", a: "Ping is the time, in milliseconds, for a small signal to travel from your device to a server and back. Lower is better: under 30 ms feels instant, 30–60 ms is fine for gaming, and above 100 ms delays become noticeable in games and video calls." },
+  { q: "Does a speed test use much data?", a: "On a fast connection the test may transfer a few hundred megabytes so it can measure accurately. On slower connections it uses far less, because the test sizes adapt to your speed. If you are on a tight mobile data cap, run the test while connected to Wi-Fi." },
+  { q: "Should I test over Wi-Fi or Ethernet?", a: "Test the way you normally use the connection first, then test again with a wired Ethernet cable if you can. The difference between the two results shows exactly how much speed your Wi-Fi setup is costing you." },
+  { q: "Why does my speed change every time I run the test?", a: "Internet speed is not constant. It varies with network congestion, Wi-Fi interference, what other devices in your home are doing, and the route your traffic takes to the test server. Small variations of 10–20% between runs are completely normal." },
+  { q: "What upload speed do I need for video calls?", a: "A one-to-one HD video call needs roughly 2–4 Mbps upload. Group calls, screen sharing and live streaming need more — 6–10 Mbps upload gives comfortable headroom so your picture stays sharp." },
+  { q: "Can a VPN change my speed test result?", a: "Yes. A VPN adds encryption work and routes your traffic through an extra server, which usually lowers speed and raises ping. Test with the VPN off to measure your raw connection, then with it on to see what it costs you." },
+  { q: "Is this speed test free and private?", a: "Yes. The test is free, needs no account or sign-up, and the measurements happen in your browser between your device and the test servers. SpeedTestHub does not store your results or your IP address." }
+];
+
+/* ================= Page building ================= */
+function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+function cardHTML(a){
+  return '<article class="card"><div class="meta">GUIDE · ' + a.read.toUpperCase() + '</div>' +
+    '<h3><a href="#/' + a.slug + '">' + a.title + '</a></h3>' +
+    '<p>' + a.desc + '</p>' +
+    '<a class="read" href="#/' + a.slug + '">Read article →</a></article>';
+}
+
+var dyn = document.getElementById('dynamicPages');
+
+ARTICLES.forEach(function(a){
+  var others = ARTICLES.filter(function(x){ return x.slug !== a.slug; }).slice(0,3);
+  var rel = others.map(function(o){ return '<li><a href="#/' + o.slug + '">' + o.title + '</a></li>'; }).join('');
+  var sec = document.createElement('div');
+  sec.className = 'page';
+  sec.id = 'page-' + a.slug;
+  sec.innerHTML = '<article class="article">' +
+    '<a class="backlink" href="#/articles">← All articles</a>' +
+    '<h1>' + a.title + '</h1>' +
+    '<div class="meta">SpeedTestHub Guides · ' + a.read + '</div>' +
+    a.body +
+    '<div class="related"><h3>Related guides</h3><ul>' + rel + '</ul></div>' +
+    '</article>';
+  dyn.appendChild(sec);
+});
+
+var staticPages = {
+  about: { nav:'about', html: `
+    <div class="prose">
+      <h1>About SpeedTestHub</h1>
+      <p>SpeedTestHub is a free internet speed test that runs entirely in your web browser. It measures the three numbers that describe your connection — ping, download speed and upload speed — using real data transfers between your device and public test servers, then explains in plain English what those numbers mean for the things you actually do online: streaming, gaming, video calls and working from home.</p>
+      <h2>Why we built it</h2>
+      <p>Most people only think about their internet speed when something goes wrong — a film buffers, a call freezes, a game lags. At that moment, what you need is a trustworthy measurement and a clear explanation, not a sales pitch for a faster plan. SpeedTestHub exists to give you both: honest numbers measured from your own connection, and original guides that explain <a href="#/what-is-a-good-internet-speed">what a good internet speed is</a>, why <a href="#/download-vs-upload-speed">download and upload speeds differ</a>, and how to fix a connection that is underperforming.</p>
+      <h2>How the test works</h2>
+      <p>When you press Start, your browser times a series of small requests to measure latency, then downloads data in increasing sizes and uploads data in increasing sizes, timing every transfer. The results are calculated from those real timings on your device. Nothing is simulated, estimated or copied from your internet plan — if the test servers cannot be reached, the test tells you so instead of inventing a number.</p>
+      <h2>Our promise</h2>
+      <p>No accounts, no sign-ups, no storing your results. The guides on this site are written by us, for this site, and kept practical: if a tip is in our list of <a href="#/why-is-my-internet-slow">fixes for slow internet</a>, it is because it genuinely resolves real problems.</p>
+    </div>` },
+  contact: { nav:'contact', html: `
+    <div class="prose">
+      <h1>Contact SpeedTestHub</h1>
+      <p>Questions about the speed test, a correction to one of our guides, or a suggestion for a topic we should cover? We read everything.</p>
+      <div class="callout">
+        <p><strong>Email:</strong> <a href="mailto:contact@speedtesthub.github.io">contact@speedtesthub.github.io</a></p>
+        <p class="small" style="margin-top:8px">We aim to reply within a few working days. Please note we cannot troubleshoot your home network individually or contact your internet provider on your behalf — but our guide to <a href="#/why-is-my-internet-slow">fixing slow internet</a> covers the checks that solve most problems.</p>
+      </div>
+      <h2>Before you write</h2>
+      <p>If your question is "why is my speed lower than my plan?", the fastest answer is usually in our articles: start with <a href="#/why-is-my-internet-slow">Why Is My Internet So Slow? 12 Fixes That Work</a>, and check your numbers against <a href="#/what-is-a-good-internet-speed">what a good internet speed</a> actually is for your household.</p>
+    </div>` },
+  privacy: { nav:'', html: `
+    <div class="prose">
+      <h1>Privacy Policy</h1>
+      <p class="small">Last updated: 2026</p>
+      <p>SpeedTestHub ("we", "this site") is designed to measure your internet speed without collecting your personal information. This policy explains, plainly, what happens when you use the site.</p>
+      <h2>What we collect</h2>
+      <p><strong>Nothing about your speed test.</strong> The test runs in your browser. Your ping, download and upload results are calculated on your device and displayed to you; they are not sent to us, stored by us, or shared by us. We do not ask for accounts, names, or email addresses to run a test, and we do not store your IP address.</p>
+      <h2>The test servers</h2>
+      <p>To measure your speed, your browser connects directly to third-party speed test servers (operated by Cloudflare). As with any internet connection, those servers necessarily see your IP address in order to send data back to you, and their handling of that connection is covered by their own privacy policies. The data transferred during a test is meaningless test payload — it contains no personal information.</p>
+      <h2>Cookies and storage</h2>
+      <p>SpeedTestHub does not set advertising cookies and does not use local storage to track you between visits. If third-party services are ever added to the site (for example, privacy-respecting analytics or advertising), this policy will be updated to describe them before they are used.</p>
+      <h2>External links</h2>
+      <p>Pages on this site may link to external websites. We are not responsible for the privacy practices of those sites.</p>
+      <h2>Changes and contact</h2>
+      <p>If this policy changes, the updated version will be posted on this page with a new date. Questions about privacy can be sent to <a href="mailto:contact@speedtesthub.github.io">contact@speedtesthub.github.io</a>.</p>
+    </div>` },
+  terms: { nav:'', html: `
+    <div class="prose">
+      <h1>Terms of Use</h1>
+      <p class="small">Last updated: 2026</p>
+      <p>By using SpeedTestHub, you agree to these terms. If you do not agree, please do not use the site.</p>
+      <h2>The service</h2>
+      <p>SpeedTestHub provides a free, browser-based internet speed test and educational articles about internet connections. The service is provided "as is", without warranties of any kind. We may change, suspend or discontinue any part of the site at any time.</p>
+      <h2>About test results</h2>
+      <p>Speed test results are measurements of your connection at a moment in time, taken between your device and third-party test servers. Results vary with network conditions and are provided for information only. They are not a guarantee of the speed your internet provider delivers, and they do not form the basis of any claim against your provider. If you believe your provider is not delivering your contracted speed, use repeated wired tests over several days as evidence and raise it with them directly.</p>
+      <h2>Acceptable use</h2>
+      <p>You agree not to misuse the site: do not attempt to disrupt the service, automate abusive volumes of tests, misrepresent results as ours, or use the site for anything unlawful. Note that running a speed test transfers real data; you are responsible for any data charges from your own internet or mobile provider.</p>
+      <h2>Content</h2>
+      <p>The articles on this site are original educational content owned by SpeedTestHub. You may link to them freely; you may not republish them in full without permission. Information in the articles is general guidance, not professional or contractual advice.</p>
+      <h2>Liability</h2>
+      <p>To the maximum extent permitted by law, SpeedTestHub is not liable for any loss or damage arising from use of the site, reliance on test results, or actions taken based on our articles.</p>
+      <h2>Contact</h2>
+      <p>Questions about these terms: <a href="mailto:contact@speedtesthub.github.io">contact@speedtesthub.github.io</a>.</p>
+    </div>` },
+  disclaimer: { nav:'', html: `
+    <div class="prose">
+      <h1>Disclaimer</h1>
+      <p class="small">Last updated: 2026</p>
+      <p>The information and tools on SpeedTestHub are provided for general educational purposes only.</p>
+      <h2>Speed test accuracy</h2>
+      <p>Our speed test measures real transfers between your browser and third-party test servers. Results reflect your connection, device, browser and network conditions at the moment of the test, and will naturally vary between runs. A single result should not be treated as a definitive measurement of your internet service. Factors outside our control — your device's hardware, Wi-Fi conditions, browser limits, VPNs, firewalls and the test servers' load — can all affect results.</p>
+      <h2>No affiliation</h2>
+      <p>SpeedTestHub is an independent website. We are not affiliated with, endorsed by, or connected to any internet service provider, or to Cloudflare, whose public test endpoints the browser test connects to. Product and company names mentioned in our articles belong to their respective owners and are used only to describe how those services behave.</p>
+      <h2>Article content</h2>
+      <p>Speed figures quoted in our articles (for example, the bandwidth a 4K stream uses) are typical working figures drawn from the services' published requirements and general industry knowledge; providers change their requirements over time, and your experience may differ. Nothing on this site is a substitute for the terms of your own internet contract.</p>
+      <h2>External links</h2>
+      <p>We are not responsible for the content, accuracy or availability of external websites linked from this site.</p>
+    </div>` }
+};
+
+Object.keys(staticPages).forEach(function(key){
+  var sec = document.createElement('div');
+  sec.className = 'page';
+  sec.id = 'page-' + key;
+  sec.innerHTML = staticPages[key].html;
+  dyn.appendChild(sec);
+});
+
+/* Cards + FAQ injection */
+document.getElementById('homeCards').innerHTML = ARTICLES.map(cardHTML).join('');
+document.getElementById('articlesCards').innerHTML = ARTICLES.map(cardHTML).join('');
+document.getElementById('faqList').innerHTML = FAQS.map(function(f){
+  return '<details class="faq"><summary>' + f.q + '</summary><p>' + f.a + '</p></details>';
+}).join('');
+
+/* ================= Router ================= */
+var ROUTES = { '':'home', '/':'home', '/articles':'articles', '/about':'about', '/contact':'contact', '/privacy':'privacy', '/terms':'terms', '/disclaimer':'disclaimer' };
+ARTICLES.forEach(function(a){ ROUTES['/' + a.slug] = a.slug; });
+
+function currentRoute(){
+  var h = location.hash.replace(/^#/, '');
+  return ROUTES.hasOwnProperty(h) ? ROUTES[h] : 'home';
+}
+function render(){
+  var r = currentRoute();
+  var pages = document.querySelectorAll('.page');
+  for (var i = 0; i < pages.length; i++){ pages[i].classList.toggle('on', pages[i].id === 'page-' + r); }
+  var navName = r === 'home' ? 'home' : (r === 'articles' || ARTICLES.some(function(a){return a.slug===r;}) ? 'articles' : (staticPages[r] ? staticPages[r].nav : ''));
+  var links = document.querySelectorAll('.navlink');
+  for (var j = 0; j < links.length; j++){ links[j].classList.toggle('active', links[j].getAttribute('data-nav') === navName); }
+  var titles = { home:'SpeedTestHub — Free Internet Speed Test (Ping, Download & Upload)', articles:'Articles — SpeedTestHub', about:'About — SpeedTestHub', contact:'Contact — SpeedTestHub', privacy:'Privacy Policy — SpeedTestHub', terms:'Terms of Use — SpeedTestHub', disclaimer:'Disclaimer — SpeedTestHub' };
+  var art = ARTICLES.filter(function(a){ return a.slug === r; })[0];
+  document.title = art ? art.title + ' — SpeedTestHub' : (titles[r] || titles.home);
+  window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', render);
+
+/* ================= Speed test ================= */
+var CF_BASE = 'https://speed.cloudflare.com';
+var els = {
+  btn: document.getElementById('startBtn'),
+  retry: document.getElementById('retryBtn'),
+  value: document.getElementById('gaugeValue'),
+  unit: document.getElementById('gaugeUnit'),
+  phase: document.getElementById('gaugePhase'),
+  bar: document.getElementById('progressBar'),
+  needle: document.getElementById('needle'),
+  ping: document.getElementById('resPing'),
+  down: document.getElementById('resDown'),
+  up: document.getElementById('resUp'),
+  verdict: document.getElementById('verdictBox'),
+  verdictSummary: document.getElementById('verdictSummary'),
+  verdictList: document.getElementById('verdictList'),
+  error: document.getElementById('errorBox')
+};
+var running = false;
+
+function gaugeAngle(mbps){
+  if (!isFinite(mbps) || mbps <= 0) return -90;
+  var t = Math.log10(mbps + 1) / Math.log10(1001); /* 0 at 0 Mbps, 1 at 1000 Mbps */
+  if (t > 1) t = 1;
+  return -90 + t * 180;
+}
+function showSpeed(mbps){
+  els.value.textContent = mbps >= 100 ? Math.round(mbps) : (Math.round(mbps * 10) / 10);
+  els.unit.textContent = 'Mbps';
+  els.needle.style.transform = 'rotate(' + gaugeAngle(mbps) + 'deg)';
+}
+function showPing(ms){
+  els.value.textContent = Math.round(ms);
+  els.unit.textContent = 'ms';
+  els.needle.style.transform = 'rotate(' + (-90 + Math.min(ms, 300) / 300 * 180) + 'deg)';
+}
+function fmt(n){ return n >= 100 ? String(Math.round(n)) : String(Math.round(n * 10) / 10); }
+function setProgress(frac){ els.bar.style.width = Math.round(frac * 100) + '%'; }
+
+async function measurePing(samples){
+  var times = [];
+  for (var i = 0; i < samples; i++){
+    var t0 = performance.now();
+    var r = await fetch(CF_BASE + '/__down?bytes=0&r=' + Math.random().toString(36).slice(2), { cache: 'no-store' });
+    if (!r.ok) throw new Error('ping failed');
+    await r.arrayBuffer();
+    times.push(performance.now() - t0);
+    showPing(times[times.length - 1]);
+    setProgress(0.02 + (i + 1) / samples * 0.08);
+  }
+  times.sort(function(a, b){ return a - b; });
+  return times[Math.floor(times.length / 2)]; /* median */
+}
+
+async function measureDownload(onDone){
+  var sizes = [100000, 1000000, 5000000, 10000000, 25000000, 25000000, 50000000];
+  var measuredBytes = 0, measuredTime = 0, lastSpeed = 0;
+  var startAll = performance.now();
+  for (var s = 0; s < sizes.length; s++){
+    var size = sizes[s];
+    var t0 = performance.now();
+    var resp = await fetch(CF_BASE + '/__down?bytes=' + size + '&r=' + Math.random().toString(36).slice(2), { cache: 'no-store' });
+    if (!resp.ok || !resp.body) throw new Error('download failed');
+    var reader = resp.body.getReader();
+    var received = 0;
+    while (true){
+      var chunk = await reader.read();
+      if (chunk.done) break;
+      received += chunk.value.length;
+      var el = (performance.now() - t0) / 1000;
+      if (el > 0.05){
+        lastSpeed = received * 8 / el / 1e6;
+        showSpeed(lastSpeed);
+      }
+      var overall = (performance.now() - startAll) / 1000;
+      setProgress(0.10 + Math.min(overall / 12, 1) * 0.5);
+    }
+    var dt = (performance.now() - t0) / 1000;
+    /* Count the larger, more reliable chunks fully; weight early small chunks lightly by including them too */
+    measuredBytes += received;
+    measuredTime += dt;
+    if (performance.now() - startAll > 12000) break;
+  }
+  var result = measuredBytes * 8 / measuredTime / 1e6;
+  if (onDone) onDone(result);
+  return result;
+}
+
+async function measureUpload(onDone){
+  var sizes = [100000, 500000, 1000000, 3000000, 5000000, 10000000, 10000000];
+  var totalBytes = 0, totalTime = 0;
+  for (var s = 0; s < sizes.length; s++){
+    var size = sizes[s];
+    var payload = new Uint8Array(size);
+    for (var i = 0; i < size; i += 4096){ payload[i] = (i / 4096) % 251; }
+    var t0 = performance.now();
+    var resp = await fetch(CF_BASE + '/__up', { method: 'POST', body: payload });
+    if (!resp.ok) throw new Error('upload failed');
+    await resp.text();
+    var dt = (performance.now() - t0) / 1000;
+    var mbps = size * 8 / dt / 1e6;
+    showSpeed(mbps);
+    totalBytes += size;
+    totalTime += dt;
+    setProgress(0.62 + (s + 1) / sizes.length * 0.36);
+    if (dt > 3 && s >= 2) break; /* sample is big enough to be reliable */
+  }
+  var result = totalBytes * 8 / totalTime / 1e6;
+  if (onDone) onDone(result);
+  return result;
+}
+
+function verdictFor(ping, down, up){
+  var items = [];
+  function rate(okAt, midAt, v){
+    return v >= okAt ? 'ok' : (v >= midAt ? 'mid' : 'no');
+  }
+  function pingRate(v){ return v <= 50 ? 'ok' : (v <= 100 ? 'mid' : 'no'); }
+  function label(cls, good, mid, bad){ return cls === 'ok' ? good : (cls === 'mid' ? mid : bad); }
+
+  var streamCls = rate(25, 8, down);
+  items.push('<li><span class="tag ' + streamCls + '">Streaming:</span> ' + label(streamCls,
+    '4K streaming will run smoothly, even on more than one screen at once.',
+    'HD streaming is fine; a single 4K stream should work but may dip in quality at busy times.',
+    'Expect buffering above standard definition — HD will be a struggle.') + '</li>');
+
+  var gameCls = pingRate(ping);
+  items.push('<li><span class="tag ' + gameCls + '">Online gaming:</span> ' + label(gameCls,
+    'Your ping is low enough for fast, competitive online play.',
+    'Playable for most games; very fast-paced competitive titles may feel slightly behind.',
+    'Your ping is high — expect noticeable lag in real-time games. A wired connection and nearby servers help most.') + '</li>');
+
+  var callCls = (up >= 4 && ping <= 100) ? 'ok' : ((up >= 2 && ping <= 150) ? 'mid' : 'no');
+  items.push('<li><span class="tag ' + callCls + '">Video calls:</span> ' + label(callCls,
+    'HD video calls will look and sound clear in both directions.',
+    'Calls will work, but group calls or screen sharing may reduce your video quality.',
+    'Your upload speed or ping will likely make your picture freeze or pixelate on calls.') + '</li>');
+
+  var workCls = rate(50, 20, down);
+  items.push('<li><span class="tag ' + workCls + '">Downloads &amp; working from home:</span> ' + label(workCls,
+    'Large files download quickly and cloud tools will feel snappy.',
+    'Everyday work is fine; very large downloads will take a while.',
+    'Big downloads and updates will be slow — plan them for quiet hours.') + '</li>');
+
+  var summary;
+  if (down >= 100 && up >= 20 && ping <= 50) summary = 'Overall: an excellent connection — comfortably above what most households need.';
+  else if (down >= 25 && up >= 5 && ping <= 100) summary = 'Overall: a solid connection that covers streaming, calls and gaming for a typical household.';
+  else if (down >= 10) summary = 'Overall: a workable connection for one or two people, but it will strain under several simultaneous demands.';
+  else summary = 'Overall: a slow connection by current standards — fine for browsing and email, but streaming and calls will struggle.';
+  return { summary: summary, items: items };
+}
+
+async function runTest(){
+  if (running) return;
+  running = true;
+  els.btn.disabled = true;
+  els.btn.textContent = 'Testing…';
+  els.error.classList.remove('on');
+  els.verdict.classList.remove('on');
+  els.ping.textContent = '–'; els.down.textContent = '–'; els.up.textContent = '–';
+  setProgress(0);
+  try {
+    els.phase.textContent = 'Measuring ping…';
+    var ping = await measurePing(10);
+    els.ping.textContent = Math.round(ping);
+    showPing(ping);
+
+    els.phase.textContent = 'Measuring download speed…';
+    var down = await measureDownload();
+    els.down.textContent = fmt(down);
+    showSpeed(down);
+
+    els.phase.textContent = 'Measuring upload speed…';
+    var up = await measureUpload();
+    els.up.textContent = fmt(up);
+    showSpeed(down);
+
+    setProgress(1);
+    els.phase.textContent = 'Test complete';
+    var v = verdictFor(ping, down, up);
+    els.verdictSummary.textContent = v.summary;
+    els.verdictList.innerHTML = v.items.join('');
+    els.verdict.classList.add('on');
+    els.btn.textContent = 'Test Again';
+  } catch (e) {
+    setProgress(0);
+    els.phase.textContent = 'Test failed';
+    els.value.textContent = '0';
+    els.unit.textContent = 'Mbps';
+    els.needle.style.transform = 'rotate(-90deg)';
+    els.error.classList.add('on');
+    els.btn.textContent = 'Start Test';
+  }
+  els.btn.disabled = false;
+  running = false;
+}
+
+els.btn.addEventListener('click', runTest);
+els.retry.addEventListener('click', runTest);
+
+render();
+</script>
+</body>
+</html>
